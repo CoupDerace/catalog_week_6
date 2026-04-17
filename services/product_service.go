@@ -13,8 +13,7 @@ func NewProductService() *ProductService {
     return &ProductService{productRepo: repositories.NewProductRepository()} 
 } 
  
-func (s *ProductService) GetAll(page, limit int, category string) 
-([]models.Product, int64, error) { 
+func (s *ProductService) GetAll(page, limit int, category string) ([]models.Product, int64, error) { 
     if page <= 0 { page = 1 } 
     if limit <= 0 || limit > 100 { limit = 10 } 
     return s.productRepo.FindAll(page, limit, category) 
@@ -24,8 +23,7 @@ func (s *ProductService) GetByID(id uint) (*models.Product, error) {
     return s.productRepo.FindByID(id) 
 } 
  
-func (s *ProductService) Create(req *models.CreateProductRequest) 
-(*models.Product, error) { 
+func (s *ProductService) Create(req *models.CreateProductRequest) (*models.Product, error) { 
     product := &models.Product{ 
         Name:        req.Name, 
         Description: req.Description, 
@@ -38,8 +36,7 @@ func (s *ProductService) Create(req *models.CreateProductRequest)
     return product, err 
 } 
  
-func (s *ProductService) Update(id uint, req *models.UpdateProductRequest) 
-(*models.Product, error) { 
+func (s *ProductService) Update(id uint, req *models.UpdateProductRequest) (*models.Product, error) { 
     product, err := s.productRepo.FindByID(id) 
     if err != nil { return nil, err } 
  

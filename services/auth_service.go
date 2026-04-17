@@ -54,7 +54,7 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 		return "", nil, errors.New("failed to query user")
 	} else {
 		now := time.Now().Unix()
-		user.LastLoginAt = &now
+		user.LastLoginAt = now
 		user.EmailVerified = true
 		s.userRepo.Update(user)
 	}
