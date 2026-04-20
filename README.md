@@ -91,6 +91,7 @@ GET
 ```
 GET /v1/products/:id
 ```
+<img width="1392" height="880" alt="image" src="https://github.com/user-attachments/assets/65c7425c-ffa9-4003-ae2f-52735cae1e2f" />
 
 ---
 
