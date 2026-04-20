@@ -95,8 +95,6 @@ GET /v1/products/:id
 
 ---
 
-## Flow User
-![alt text](images/sequencuser.png)
 
 ## Code
 ```
@@ -120,8 +118,6 @@ Handler-->>Client: JSON Response
 
 ---
 
-## Flow Product
-![alt text](images/sequencuser.png)
 
 ## Code
 ```
