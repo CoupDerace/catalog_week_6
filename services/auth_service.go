@@ -37,27 +37,27 @@ func (s *AuthService) VerifyFirebaseToken(firebaseToken string) (string, *models
 	name, _ := token.Claims["name"].(string)
 
 	user, err := s.userRepo.FindByFirebaseUID(uid)
-	if errors.Is(err, gorm.ErrRecordNotFound) {
-		now := time.Now().Unix()
-		user = &models.User{
-			FirebaseUID:   uid,
-			Email:        email,
-			Name:         name,
-			Role:         "user",
-			EmailVerified: emailVerified,
-			LastLoginAt:   now,
-		}
-		if err != nil {
-			return "", nil, errors.New("failed to create user")
-		}
-	} else if err != nil {
-		return "", nil, errors.New("failed to query user")
-	} else {
-		now := time.Now().Unix()
-		user.LastLoginAt = now
-		user.EmailVerified = true
-		s.userRepo.Update(user)
-	}
+if errors.Is(err, gorm.ErrRecordNotFound) {
+    user = &models.User{
+        FirebaseUID:   uid,
+        Email:         email,
+        Name:          name,
+        Role:          "user",
+        EmailVerified: emailVerified,
+        LastLoginAt:   time.Now().Unix(),
+    }
+
+    if err := s.userRepo.Create(user); err != nil {
+        return "", nil, err
+    }
+
+} else if err != nil {
+    return "", nil, err
+} else {
+    user.LastLoginAt = time.Now().Unix()
+    user.EmailVerified = true
+    s.userRepo.Update(user)
+}
 
 	jwtToken, err := s.generateJWT(user)
 	if err != nil {
@@ -84,5 +84,5 @@ func (s *AuthService) generateJWT(user *models.User) (string, error) {
 		"exp": time.Now().Add(time.Hour * time.Duration(expireHours)).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(os.Getenv("JWT_SECRET_KEY")))
+	return token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 }

@@ -1,4 +1,5 @@
 // .gitignore 
+
 # .gitignore 
 .env 
 firebase-service-account.json 
@@ -6,3 +7,4 @@ firebase-service-account.json
 *.test 
 /tmp 
 /vendor 
+.vscode/templates

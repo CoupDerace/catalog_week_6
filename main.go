@@ -12,7 +12,7 @@ import (
 func main() { 
     // 1. Load environment variables dari .env file 
     if err := godotenv.Load(); err != nil { 
-        log.Println("File .env tidak ditemukan, menggunakan environment variable sistem") 
+        log.Println("Gagal load .env: %v", err) 
 } 
 
     // 2. Inisialisasi Firebase Admin SDK 
