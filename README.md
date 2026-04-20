@@ -118,24 +118,3 @@ Handler-->>Client: JSON Response
 
 ---
 
-
-## Code
-```
-sequenceDiagram
-participant Client
-participant Middleware
-participant Handler
-participant Service
-participant Repository
-participant DB
-
-Client->>Middleware: HTTP Request (GET /products)
-Middleware->>Handler: forward request
-Handler->>Service: GetAllProducts()
-Service->>Repository: FindAll()
-Repository->>DB: SELECT * FROM products
-DB-->>Repository: product list
-Repository-->>Service: products data
-Service-->>Handler: products response
-Handler-->>Client: JSON Response
-```
